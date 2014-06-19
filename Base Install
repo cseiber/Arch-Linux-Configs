@@ -75,7 +75,7 @@ Configure ramdisk
 
 mkinitcpio -p linux
 
-(WARNING: missing firmware for module: aic94xx smsmdtv)
+(WARNING: missing firmware for module: aic94xx smsmdtv)  -- this looks to be normal behavior as of 6/19/2014 according to arch forums.
 
 Bootloader
 
