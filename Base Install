@@ -1,0 +1,112 @@
+Partition Drives
+
+Create swap, bios boot, boot, var, home, /.
+
+gdisk /dev/sdx
+
+GUID 
+ef02 for bios boot
+8200 for swap
+8300 for else
+
+Format Partitions
+
+swap		mkswap    /dev/sdx
+biosboot	—
+boot		mkfs.ext2 /dev/sdx
+var		mkfs.ext4 /dev/sdx
+home		mkfs.ext4 /dev/sdx
+/		mkfs.ext4 /dev/sdx
+
+
+Mount Partitions
+
+mount /dev/sdx (root /) /mnt
+mkdir /mnt boot home var
+mount /dev/sdx (home) /mnt/home
+mount /dev/sdx (boot) /mnt/boot
+mount /dev/sdx (var) /mnt/var
+swapon /dev/sdx (swap) 
+
+
+Install Base system
+
+cd /mnt
+pacstrap -i /mnt base base-devel
+
+Generate fstab
+
+genfstab -U -p /mnt >> /mnt/etc/fstab
+
+Confirm fstab
+
+cat /etc/fstab
+
+Chroot Configurations
+
+cd ..
+
+arch-chroot /mnt /bin/bash
+
+Configure locale
+
+vi locale.gen  -uncomment en_US.UTF-8 en_US ISO-8859-1
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+export LANG=en_US.UTF-8
+
+Configure localtime
+
+ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
+
+Configure hardware clock
+
+hwclock —-systohc —-utc
+
+Configure hostname
+
+echo hostname > /etc/hostname
+
+Configure network
+
+systemctl enable dhcpcd.service
+
+Configure ramdisk 
+
+mkinitcpio -p linux
+
+(WARNING: missing firmware for module: aic94xx smsmdtv)
+
+Bootloader
+
+pacman -S grub
+grub-install —-target=i386-pc —-recheck /dev/sdx  (select /boot / host no partition number)
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
+
+swapoff
+
+umount /dev/sdx (all mounted drives and root last)
+
+reboot
+
+
+Default login : root
+
+passwd
+
+done.
+
+
+
+
+
+
+
+
+
+
+
+
