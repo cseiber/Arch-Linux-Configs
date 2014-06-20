@@ -1,0 +1,24 @@
+parse-edid: parse-edid version 2.0.0
+parse-edid: EDID checksum passed.
+
+        # EDID version 1 revision 3
+Section "Monitor"
+        # Block type: 2:0 3:fc
+        Identifier "QHD270"
+        VendorName "ACB"
+        ModelName "QHD270"
+        # Block type: 2:0 3:fc
+        # Block type: 2:0 3:fc
+        # Block type: 2:0 3:fc
+        # DPMS capabilities: Active off:yes  Suspend:no  Standby:no
+
+        Mode    "2560x1440"     # vfreq 59.951Hz, hfreq 88.787kHz
+                DotClock        241.500000
+                HTimings        2560 2608 2640 2720
+                VTimings        1440 1443 1448 1481
+                Flags   "-HSync" "+VSync"
+        EndMode
+        # Block type: 2:0 3:fc
+        # Block type: 2:0 3:fc
+        # Block type: 2:0 3:fc
+EndSection
